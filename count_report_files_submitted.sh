@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export REPORTS_DIR="/home/edulution/reports"
+
 function list_reports(){
 	# remove any file named reports_count
 	rm -rf "$1/reports_count.txt"
@@ -20,6 +22,4 @@ function list_reports(){
 
 }
 
-export REPORTS_DIR="/home/edulution/reports"
-
-list_reports $REPORTS_DIR
+list_reports "$REPORTS_DIR"
