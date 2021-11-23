@@ -9,17 +9,6 @@ export REPORTS_DIR="/home/edulution/reports"
 # 	String: The count and names of report files that are in the directory
 # 		A file called reports_count.txt is created as a by-product and posted on Slack via APIs
 
-function list_active_centers {
-	list_active_centers = 
-
-}
-
-function list_of_baseline_files {
-	#check baseline file in monthend report zip file 
-	month=$(date +%B)
-	num_baseline_files=$( unzip -l .{csv,zip} | grep -q baseline && echo $? )
-	echo "Current Month : $month" + "$num_baseline_files files received:" 
-}
 
 
 function list_reports(){
@@ -39,7 +28,9 @@ function list_reports(){
 
 	# Loop through the filenames and echo their names to reports_count.txt
 	for filename in $( ls "$1"/*.{csv,zip} ); do
+		#check the current month monthend was submitted 
 		month=$(date +%B)
+		#Print out the current month and monthend.zip for the center
 		echo  "Current Month : $month" +  $(basename $filename) >> "$1/reports_count.txt"
 	done
 	
@@ -48,6 +39,17 @@ function list_reports(){
 
 }
 
+
+# Numbers of Baseline files received
+function list_of_baseline_files {
+	#check baseline file for the current month 
+	month=$(date +%B)
+	#Current check monthend.zip file and check for baseline file
+	num_baseline_files=$( unzip -l .{csv,zip} | grep -q baseline && echo $? )
+	#Print out the current month and baseline file the center
+	echo "Current Month : $month" + "$num_baseline_files files received:" 
+
+}
 
 
 # Call the function above with the reports_dir supplied
